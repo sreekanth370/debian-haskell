@@ -4,8 +4,8 @@ License:        BSD3
 License-File:   debian/copyright
 Author:         David Fox <dsf@seereason.com>, Jeremy Shaw <jeremy@seereason.com>, Clifford Beshers <beshers@seereason.com>
 Category:       Debian
-Maintainer:     David Fox <dsf@seereason.com>
-Homepage:       https://github.com/ddssff/debian-haskell
+Maintainer:     Clint Adams <clint@debian.org>
+Homepage:       https://github.com/clinty/debian-haskell
 Build-Type:     Simple
 Synopsis:       Modules for working with the Debian package system
 Cabal-Version: >= 1.9
@@ -153,4 +153,4 @@ Test-Suite debian-tests
 
 source-repository head
   type:     git
-  location: https://github.com/ddssff/debian-haskell
+  location: https://github.com/clinty/debian-haskell
