@@ -20,11 +20,6 @@ flag network-uri
  Description: Get Network.URI from the network-uri package
  Default: True
 
-flag pretty-new
- Description: pretty-1.1.2 includes the Text.PrettyPrint.HughesPJClass module from prettyclass
- Default: True
- Manual: True
-
 Library
  Hs-Source-Dirs: src
  Build-Depends:
@@ -45,6 +40,7 @@ Library
    mtl,
    old-locale,
    parsec >= 2 && <4,
+   pretty >= 1.1.2,
    process,
    process-extras >= 0.2.0,
    pureMD5,
@@ -66,10 +62,6 @@ Library
    Build-Depends: network-uri >= 2.6
  else
    Build-Depends: network >= 2.4 && < 2.6
- if flag(pretty-new)
-   Build-Depends: pretty >= 1.1.2
- else
-   Build-Depends: pretty, prettyclass
 
  ghc-options: -Wall
  Exposed-modules:
@@ -144,12 +136,8 @@ Test-Suite debian-tests
   Type: exitcode-stdio-1.0
   Hs-Source-Dirs: Test
   Main-Is: Main.hs
- Build-Depends: base, Cabal, debian, HUnit, parsec, regex-tdfa, text
+ Build-Depends: base, Cabal, debian, HUnit, parsec, pretty >= 1.1.2, regex-tdfa, text
  Other-Modules: Changes Control Dependencies Paths_debian Versions
- if flag(pretty-new)
-   Build-Depends: pretty >= 1.1.2
- else
-   Build-Depends: pretty, prettyclass
 
 source-repository head
   type:     git
