@@ -32,7 +32,6 @@ Library
    either,
    exceptions,
    filepath,
-   HaXml >= 1.20,
    hostname,
    HUnit,
    lens,
@@ -97,7 +96,6 @@ Library
         Debian.Version.Common,
         Debian.Version.String,
         Debian.Version.Text,
-        Debian.Report,
         Debian.TH,
         Debian.Time,
         Debian.URI,
@@ -113,17 +111,6 @@ Executable fakechanges
  Build-Depends: base, debian, directory, filepath
  ghc-options: -threaded -W
  Extensions:           ExistentialQuantification CPP
-
-Executable debian-report
- Hs-Source-Dirs: utils
- Main-is: Report.hs
- Build-Depends: base, debian, HaXml, unix
- ghc-options: -threaded -W
- C-Sources:           cbits/gwinsz.c
- Include-Dirs:        cbits
- Install-Includes:    gwinsz.h
- Extensions:           ExistentialQuantification CPP
- Build-Depends: pretty
 
 Executable apt-get-build-depends
  Hs-Source-Dirs: utils
