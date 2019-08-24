@@ -4,16 +4,16 @@ module Debian.Deb where
 import Control.Monad
 
 import Debian.Control.Common
-import System.Directory (canonicalizePath)
+import System.Directory (canonicalizePath, withCurrentDirectory)
 import System.Exit (ExitCode(..))
 import System.Process (readProcessWithExitCode)
-import System.Unix.Directory (withTemporaryDirectory, withWorkingDirectory)
+import System.IO.Temp (withSystemTempDirectory)
 
 fields :: (ControlFunctions a) => FilePath -> IO (Control' a)
 fields debFP =
-    withTemporaryDirectory ("fields.XXXXXX") $ \tmpdir ->
+    withSystemTempDirectory ("fields.XXXXXX") $ \tmpdir ->
       do debFP <- canonicalizePath debFP
-         withWorkingDirectory tmpdir $
+         withCurrentDirectory tmpdir $
            do (res, out, err) <- readProcessWithExitCode "ar" ["x",debFP,"control.tar.gz"] ""
               when (res /= ExitSuccess) (error $ "Dpkg.fields: " ++ show out ++ "\n" ++ show err ++ "\n" ++ show res)
               (res, out, err) <- readProcessWithExitCode "tar" ["xzf", "control.tar.gz", "./control"] ""

@@ -28,7 +28,7 @@ Library
    bzlib,
    Cabal,
    containers,
-   directory,
+   directory >= 1.2.3.0,
    either,
    exceptions,
    filepath,
@@ -49,12 +49,12 @@ Library
    SHA,
    syb,
    template-haskell,
+   temporary,
    text,
    th-lift,
    th-orphans,
    time,
    unix,
-   Unixutils >= 1.52.4,
    utf8-string,
    zlib
  if flag(network-uri)
