@@ -28,11 +28,8 @@ import Control.Applicative (Alternative(..))
 import qualified Control.Exception as E
 import "mtl" Control.Monad.State
 
-import Data.Char(toLower, isSpace, chr, ord)
-import Data.Word (Word8)
+import Data.Char(toLower, isSpace)
 import Data.List
-import qualified Data.ListLike as LL
-import qualified Data.ListLike.String as LL
 
 import Text.ParserCombinators.Parsec.Error
 import Text.ParserCombinators.Parsec.Pos
@@ -129,20 +126,17 @@ instance ControlFunctions C.ByteString where
     protectFieldText = protectFieldText'
     asString = C.unpack
 
-protectFieldText' :: (LL.StringLike a, LL.ListLike a Word8) => ControlFunctions a => a -> a
+protectFieldText' :: C.ByteString -> C.ByteString
 protectFieldText' s =
-    case LL.lines s of
-      [] -> LL.empty
-      (l : ls) -> dropWhileEnd (isSpace . chr . fromIntegral) $ LL.unlines $ l : map protect ls
+    case C.lines s of
+      [] -> mempty
+      (l : ls) -> dropWhileEnd isSpace $ C.unlines $ l : map protect ls
     where
-      dropWhileEnd :: (LL.StringLike a, LL.ListLike a Word8) => (Word8 -> Bool) -> a -> a
-      dropWhileEnd func = LL.reverse . LL.dropWhile func . LL.reverse -- foldr (\x xs -> if func x && LL.null xs then LL.empty else LL.cons x xs) empty
-      protect :: (LL.StringLike a, LL.ListLike a Word8) => a -> a
-      protect l = maybe LL.empty (\ c -> if isHorizSpace c then l else LL.cons (ord' ' ' :: Word8) l) (LL.find (const True :: Word8 -> Bool) l)
-      -- isSpace' = isSpace . chr'
-      isHorizSpace c = elem c (map ord' " \t")
-      ord' = fromIntegral . ord
-      -- chr' = chr . fromIntegral
+      dropWhileEnd :: (Char -> Bool) -> C.ByteString -> C.ByteString
+      dropWhileEnd func = C.reverse . C.dropWhile func . C.reverse
+      protect :: C.ByteString -> C.ByteString
+      protect l = maybe mempty (\ c -> if isHorizSpace c then l else C.cons ' ' l) (C.find (const True :: Char -> Bool) l)
+      isHorizSpace c = elem c " \t"
 
 {-
 main =
