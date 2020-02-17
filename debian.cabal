@@ -1,5 +1,5 @@
 Name:           debian
-Version:        4.0.1
+Version:        4.0.2
 License:        BSD3
 License-File:   debian/copyright
 Author:         David Fox <dsf@seereason.com>, Jeremy Shaw <jeremy@seereason.com>, Clifford Beshers <beshers@seereason.com>
